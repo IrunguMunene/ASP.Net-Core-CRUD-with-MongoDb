@@ -43,6 +43,10 @@ namespace MongoCrudUi.Repositories
             var countryIndexKeys = Builders<Employee>.IndexKeys.Ascending(e => e.Country);
             var countryIndexModel = new CreateIndexModel<Employee>(countryIndexKeys, indexOptions);
 
+            var nameIndexKeys = Builders<Employee>.IndexKeys.Ascending(e => e.Name);
+            var nameIndexModel = new CreateIndexModel<Employee>(nameIndexKeys, new CreateIndexOptions { Unique = true });
+
+            Collection.Indexes.CreateOne(nameIndexModel);
             Collection.Indexes.CreateOne(genderIndexModel);
             Collection.Indexes.CreateOne(departmentIndexModel);
             Collection.Indexes.CreateOne(designationIndexModel);

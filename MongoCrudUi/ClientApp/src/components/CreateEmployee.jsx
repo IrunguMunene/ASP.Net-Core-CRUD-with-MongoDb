@@ -35,6 +35,7 @@ export const CreateEmployee = () => {
                 history.push("/EmployeeList");
             }).catch(error => {
                 console.log(error);
+                alert("An error occurred. Trying to save a duplicate employee?");
             });
         }
     }
