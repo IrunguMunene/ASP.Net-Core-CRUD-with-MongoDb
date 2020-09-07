@@ -53,8 +53,11 @@ export const EditEmployee = route => {
         });
     };
 
-    const handleOnChange = (userKey, value) =>
-        setSeletedUser({ ...selectedUser, [userKey]: value });
+    const handleOnChange = (userKey, value) => {
+        if (value) {
+            setSeletedUser({ ...selectedUser, [userKey]: value });
+        }
+    }
 
     return (
         <Fragment>
