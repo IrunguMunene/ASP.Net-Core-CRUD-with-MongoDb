@@ -48,7 +48,7 @@ export const CreateEmployee = () => {
                             <Card className="mx-4">
                                 <CardBody className="p-4">
                                     <Form onSubmit={onSubmit}>
-                                        <h3>Register</h3>
+                                        <h3>Register Employee</h3>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Name" id="Name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
                                         </InputGroup>

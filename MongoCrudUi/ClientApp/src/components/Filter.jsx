@@ -68,7 +68,7 @@ export const Filter = () => {
             <div style={divStyle}>
                 <span>
                     Show Employee(s) whose &nbsp;
-                <select onChange={e => onFilterByFieldSelectionChanged(e.target.value)} value={filterByField}>
+                    <select onChange={e => onFilterByFieldSelectionChanged(e.target.value)} value={filterByField}>
                         <option key={0} value="">---Select---</option>
                         <option key={1} value="Gender">Gender</option>
                         <option key={2} value="Department">Department</option>
@@ -79,7 +79,7 @@ export const Filter = () => {
                 </span>
                 <span>
                     &nbsp; is &nbsp;
-                <select onChange={e => onFilterValueSelectionChanged(e.target.value)} value={filterValue}>
+                    <select onChange={e => onFilterValueSelectionChanged(e.target.value)} value={filterValue}>
                         <option key={0} value="">---Select---</option>
                         {
                             filterByDistinctValues.map((value, index) => (
