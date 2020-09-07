@@ -91,11 +91,12 @@ export const Filter = () => {
             </div>
             <br />
             {
-                employeeCount > 0 ? <div>
+                employeeCount > 0 ?
+                <div>
                     <span>
                         Based on the selected criteria, there a total of {employeeCount} with an average age of {averageAge} years.<br />
-                    With the oldest being {oldestEmployee}.
-                </span>
+                        With the oldest being {oldestEmployee}.
+                    </span>
                 </div> : null
             }
         </div>
