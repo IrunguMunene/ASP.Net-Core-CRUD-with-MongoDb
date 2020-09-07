@@ -24,8 +24,8 @@ export const CreateEmployee = () => {
     const onSubmit = e => {
         e.preventDefault();
 
-        if (!name) {
-            alert("You must at least enter a name.")
+        if (!name || !department || !designation || !age || !city || !country) {
+            alert("All Fields are required.")
         } else {
             axios.post(TEXTS.BASE_URL + 'CreateEmployee', {
                 name, department, designation, age: parseInt(age),
