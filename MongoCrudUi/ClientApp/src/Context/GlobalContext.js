@@ -44,7 +44,7 @@ export const GlobalProvider = ({ children }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios(TEXTS.BASE_URL + 'LoadEmployees',);
+            const result = await axios(TEXTS.BASE_URL + 'Employee/LoadEmployees',);
             dispatch({ type: "RETRIEVE", payload: result.data });
         };
 

@@ -29,8 +29,7 @@ export const Filter = () => {
 
     useEffect(() => {
         const fetchFilterByUniqueValues = async () => {
-            axios.get(TEXTS.BASE_URL + 'GetDistinctValues', { params: { fieldName: filterByField } }).then(response => {
-                console.log(response.data);
+            axios.get(TEXTS.BASE_URL + 'Employee/GetDistinctValues', { params: { fieldName: filterByField } }).then(response => {
                 setFilterByDistinctValues(response.data);
             }).catch(error => {
                 console.log(error);
@@ -49,12 +48,11 @@ export const Filter = () => {
 
     useEffect(() => {
         const fetchEmployeesByFilter = async () => {
-            axios.get(TEXTS.BASE_URL + 'GetFilteredEmployees', { params: { fieldName: filterByField, fieldValue: filterValue } }).then(response => {
+            axios.get(TEXTS.BASE_URL + 'Employee/GetFilteredEmployees', { params: { fieldName: filterByField, fieldValue: filterValue } }).then(response => {
                 setEmployeeCount(response.data.totalEmployees);
                 setAverageAge(response.data.averageAge.toFixed(2));
                 setOldestEmployee(response.data.oldestEmployee);
                 dispatch({ type: "RETRIEVE", payload: response.data.employees });
-                console.log(response.data);
             }).catch(error => {
                 console.log(error);
             });

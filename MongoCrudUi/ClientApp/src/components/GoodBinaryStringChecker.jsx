@@ -20,7 +20,7 @@ export const GoodBinaryStringChecker = () => {
 
         if (!binaryString) return;
 
-        axios.get(TEXTS.BASE_URL + 'IsBinaryStringGood', { params: { binaryString } }).then(response => {
+        axios.get(TEXTS.BASE_URL + 'BinaryStringChecker/IsBinaryStringGood', { params: { binaryString } }).then(response => {
             if (response.data) {
                 setResultStr("String is Good.");
             } else {

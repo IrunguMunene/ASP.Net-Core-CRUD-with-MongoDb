@@ -42,7 +42,7 @@ export const EditEmployee = route => {
             return;
         }
 
-        axios.put(TEXTS.BASE_URL + 'UpdateEmployee', {
+        axios.put(TEXTS.BASE_URL + 'Employee/UpdateEmployee', {
             id: selectedUser.id,
             Name: selectedUser.name,
             Department: selectedUser.department,

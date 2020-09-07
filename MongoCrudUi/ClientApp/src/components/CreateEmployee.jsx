@@ -27,7 +27,7 @@ export const CreateEmployee = () => {
         if (!name || !department || !designation || !age || !city || !country) {
             alert("All Fields are required.")
         } else {
-            axios.post(TEXTS.BASE_URL + 'CreateEmployee', {
+            axios.post(TEXTS.BASE_URL + 'Employee/CreateEmployee', {
                 name, department, designation, age: parseInt(age),
                 city, country, gender
             }).then(response => {

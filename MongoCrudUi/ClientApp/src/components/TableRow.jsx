@@ -17,7 +17,7 @@ export const TableRow = ({ employee }) => {
     }
 
     const deleteEmployee = employeeToDelete => {
-        axios.delete(TEXTS.BASE_URL + 'DeleteEmployee', { params: { id: employeeToDelete.id } }).then(response => {
+        axios.delete(TEXTS.BASE_URL + 'Employee/DeleteEmployee', { params: { id: employeeToDelete.id } }).then(response => {
             dispatch({ type: "REMOVE_EMPLOYEE", payload: employeeToDelete.id });
             history.push("/EmployeeList");
         }).catch(error => {
