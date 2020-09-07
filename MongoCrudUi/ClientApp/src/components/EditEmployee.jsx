@@ -67,9 +67,9 @@ export const EditEmployee = route => {
             <div className="app flex-row align-items-center">
                 <Container>
                     <Row className="justify-content-center">
-                        <Col md="12" lg="10" xl="8">
-                            <Card className="mx-4">
-                                <CardBody className="p-4">
+                        <Col md="10" lg="9" xl="7">
+                            <Card className="mx-3">
+                                <CardBody className="p-3">
                                     <Form onSubmit={onSubmit}>
                                         <h3>Update Employee</h3>
                                         <InputGroup className="mb-3">
@@ -100,7 +100,7 @@ export const EditEmployee = route => {
                                             <Input type="text" name="Gender" id="Gender" placeholder="Gender" value={selectedUser.gender}
                                                 onChange={e => handleOnChange("gender", e.target.value)} />
                                         </InputGroup>
-                                        <CardFooter className="p-4">
+                                        <CardFooter className="p-0">
                                             <Row>
                                                 <Col xs="12" sm="6">
                                                     <Button type="submit" className="btn btn-info mb-1" block><span>Save</span></Button>
