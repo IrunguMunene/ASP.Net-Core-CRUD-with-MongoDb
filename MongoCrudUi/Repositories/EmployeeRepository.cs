@@ -43,6 +43,7 @@ namespace MongoCrudUi.Repositories
             var countryIndexKeys = Builders<Employee>.IndexKeys.Ascending(e => e.Country);
             var countryIndexModel = new CreateIndexModel<Employee>(countryIndexKeys, indexOptions);
 
+            // Create a unique Name index to prevent duplicate employees
             var nameIndexKeys = Builders<Employee>.IndexKeys.Ascending(e => e.Name);
             var nameIndexModel = new CreateIndexModel<Employee>(nameIndexKeys, new CreateIndexOptions { Unique = true });
 
