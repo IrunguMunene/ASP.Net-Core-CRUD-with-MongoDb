@@ -36,6 +36,12 @@ export const EditEmployee = route => {
             return;
         }
 
+        if (!selectedUser.name || !selectedUser.department || !selectedUser.designation ||
+            !selectedUser.age || !selectedUser.city || !selectedUser.country || !selectedUser.gender) {
+            alert("All fields are mandatory.");
+            return;
+        }
+
         axios.put(TEXTS.BASE_URL + 'UpdateEmployee', {
             id: selectedUser.id,
             Name: selectedUser.name,
@@ -53,11 +59,8 @@ export const EditEmployee = route => {
         });
     };
 
-    const handleOnChange = (userKey, value) => {
-        if (value) {
-            setSeletedUser({ ...selectedUser, [userKey]: value });
-        }
-    }
+    const handleOnChange = (userKey, value) =>
+        setSeletedUser({ ...selectedUser, [userKey]: value });
 
     return (
         <Fragment>
