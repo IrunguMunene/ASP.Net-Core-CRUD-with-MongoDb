@@ -10,14 +10,12 @@ import { GoodBinaryStringChecker } from './components/GoodBinaryStringChecker';
 import './custom.css'
 
 export const App = () => {
-    
     return (
         <div>
             <div className="card">
                 <div className="card-body">
                     <Router>
                         <Layout />
-                        <br />
                         <GlobalProvider>
                             <Switch>
                                 <Route exact path='/CreateEmployee' component={CreateEmployee} />

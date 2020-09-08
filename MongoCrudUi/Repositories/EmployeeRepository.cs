@@ -55,6 +55,12 @@ namespace MongoCrudUi.Repositories
             Collection.Indexes.CreateOne(countryIndexModel);
         }
 
+        public async Task<Employee> GetEmployeeById(string id)
+        {
+            var filter = Builders<Employee>.Filter.Eq(f => f.Id, id);
+            return await Collection.Find(filter).FirstOrDefaultAsync();
+        }
+
         /// <summary>
         /// The function returns a list of all the employees, sort by age ascending.
         /// A show case of using simple aggregation as per test requirement

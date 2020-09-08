@@ -40,6 +40,20 @@ namespace MongoCrudUi.Controllers
             }
         }
 
+        [Route("GetById"), HttpGet]
+        public async Task<Employee> GetEmployeeById(string id)
+        {
+            try
+            {
+                var employee = await employeeRepository.GetEmployeeById(id);
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [Route("CreateEmployee"), HttpPost]
         public async Task<IActionResult> CreateEmployee(EmployeeModel model)
         {

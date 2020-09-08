@@ -9,7 +9,7 @@ import { TEXTS } from '../Constants';
 
 export const EditEmployee = route => {
     let history = useHistory();
-    const { employees, dispatch } = useContext(GlobalContext);
+    const { employees, dispatch, setRefreshProvider } = useContext(GlobalContext);
     const [selectedUser, setSeletedUser] = useState({
         id: "",
         name: "",
@@ -24,8 +24,19 @@ export const EditEmployee = route => {
     const currentUserId = route.match.params.id;
 
     useEffect(() => {
-        const selectedUser = employees.find(emp => emp.id === currentUserId);
-        setSeletedUser(selectedUser);
+        const fetchEmployeeById = async id => {
+            axios.get(TEXTS.BASE_URL + 'Employee/GetById', { params: { id: currentUserId } }).then(response => {
+               setSeletedUser(response.data);
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+
+        if (employees.length === 0) {
+            fetchEmployeeById(currentUserId);
+        } else {
+            setSeletedUser(employees.find(emp => emp.id === currentUserId));
+        }
     }, []);
 
     const onSubmit = e => {

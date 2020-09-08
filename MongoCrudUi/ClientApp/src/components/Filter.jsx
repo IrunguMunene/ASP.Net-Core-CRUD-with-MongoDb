@@ -66,7 +66,7 @@ export const Filter = () => {
         <div>
             <div className="row">
                 <form className="form-inline well">
-                    <label class="control-label" style={controlMarginStyle}>Show Employee(s) whose</label>
+                    <label className="control-label" style={controlMarginStyle}>Show Employee(s) whose</label>
                     <div className="form-group">
                         <select className="form-control form-control-sm custom-select" onChange={e => onFilterByFieldSelectionChanged(e.target.value)} value={filterByField}>
                             <option key={0} value="">---Select---</option>
@@ -78,7 +78,7 @@ export const Filter = () => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label class="control-label" style={controlMarginStyle}>is</label>
+                        <label className="control-label" style={controlMarginStyle}>is</label>
                         <select className="form-control form-control-sm custom-select" onChange={e => onFilterValueSelectionChanged(e.target.value)} value={filterValue}>
                             <option key={0} value="">---Select---</option>
                             {
