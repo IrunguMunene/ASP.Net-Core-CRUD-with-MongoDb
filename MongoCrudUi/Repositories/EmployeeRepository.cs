@@ -63,7 +63,7 @@ namespace MongoCrudUi.Repositories
 
         public IEnumerable<Employee> GetEmployeeByName(string employeeName)
         {
-            return Collection.AsQueryable().Where(e => e.Name.ToLower().Contains(employeeName)).ToList();
+            return Collection.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName)).ToList();
         }
 
         /// <summary>
