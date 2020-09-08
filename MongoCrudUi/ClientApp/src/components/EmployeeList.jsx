@@ -23,7 +23,7 @@ export const EmployeeList = () => {
                         <th>Age</th>
                         <th>City</th>
                         <th>Country</th>
-                        <th>Actions</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

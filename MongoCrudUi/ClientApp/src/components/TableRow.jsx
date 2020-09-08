@@ -39,9 +39,9 @@ export const TableRow = ({ employee }) => {
             <td>{employee.city}</td>
             <td>{employee.country}</td>
             <td>
-                <div className="btn-group">
-                    <button className="btn btn-outline-primary block" style={buttonStyle} onClick={() => { openRecordForEditing(employee) }}>Edit</button>
-                    <button className="btn btn-outline-primary block" style={buttonStyle} onClick={() => { deleteEmployee(employee) }}>Delete</button>
+                <div className="text-center align-middle">
+                    <button className="btn btn-outline-primary btn-sm py-0 block" style={buttonStyle} onClick={() => { openRecordForEditing(employee) }}>Edit</button>
+                    <button className="btn btn-outline-primary btn-sm py-0 block" style={buttonStyle} onClick={() => { deleteEmployee(employee) }}>Delete</button>
                 </div>
             </td>
         </tr>  
