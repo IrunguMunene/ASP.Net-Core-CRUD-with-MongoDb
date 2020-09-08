@@ -3,9 +3,12 @@ import { GlobalContext } from '../Context/GlobalContext';
 import axios from 'axios';
 import { TEXTS } from '../Constants';
 
-const divStyle = {
-    display: 'flex',
-    alignItems: 'center',
+const divMarginStyle = {
+    margin: "15px",
+};
+
+const controlMarginStyle = {
+    margin: "5px",
 };
 
 export const Filter = () => {
@@ -64,41 +67,44 @@ export const Filter = () => {
     }, [filterValue]);
 
     return (
-        <div style={{ margin: "10px" }}>
-            <div style={divStyle}>
-                <span>
-                    Show Employee(s) whose &nbsp;
-                    <select onChange={e => onFilterByFieldSelectionChanged(e.target.value)} value={filterByField}>
-                        <option key={0} value="">---Select---</option>
-                        <option key={1} value="Gender">Gender</option>
-                        <option key={2} value="Department">Department</option>
-                        <option key={3} value="Designation">Designation</option>
-                        <option key={4} value="City">City</option>
-                        <option key={5} value="Country">Country</option>
-                    </select>
-                </span>
-                <span>
-                    &nbsp; is &nbsp;
-                    <select onChange={e => onFilterValueSelectionChanged(e.target.value)} value={filterValue}>
-                        <option key={0} value="">---Select---</option>
-                        {
-                            filterByDistinctValues.map((value, index) => (
-                                <option key={index} value={value}>{value}</option>
-                            ))
-                        }
-                    </select>
-                </span>
+        <div style={divMarginStyle}>
+            <div className="row">
+                <form className="form-inline well">
+                    <label class="control-label" style={controlMarginStyle}>Show Employee(s) whose</label>
+                    <div className="form-group">
+                        <select className="form-control form-control-sm custom-select" onChange={e => onFilterByFieldSelectionChanged(e.target.value)} value={filterByField}>
+                            <option key={0} value="">---Select---</option>
+                            <option key={1} value="Gender">Gender</option>
+                            <option key={2} value="Department">Department</option>
+                            <option key={3} value="Designation">Designation</option>
+                            <option key={4} value="City">City</option>
+                            <option key={5} value="Country">Country</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label class="control-label" style={controlMarginStyle}>is</label>
+                        <select className="form-control form-control-sm custom-select" onChange={e => onFilterValueSelectionChanged(e.target.value)} value={filterValue}>
+                            <option key={0} value="">---Select---</option>
+                            {
+                                filterByDistinctValues.map((value, index) => (
+                                    <option key={index} value={value}>{value}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                </form>
             </div>
-            <br />
-            {
-                employeeCount > 0 ?
-                <div>
-                    <span>
-                        Based on the selected criteria, there are a total of {employeeCount} employee(s), with an average age of {averageAge} years.<br />
-                        With the oldest being {oldestEmployee}.
-                    </span>
-                </div> : null
-            }
+            <div className="row">
+                {
+                    employeeCount > 0 ?
+                    <div>
+                        <span>
+                            Based on the selected criteria, there are a total of {employeeCount} employee(s), with an average age of {averageAge} years.<br />
+                            With the oldest being {oldestEmployee}.
+                        </span>
+                    </div> : null
+                }
+            </div>
         </div>
     );
 }
