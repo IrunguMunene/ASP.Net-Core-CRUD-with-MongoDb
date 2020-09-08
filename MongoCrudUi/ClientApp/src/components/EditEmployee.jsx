@@ -21,9 +21,7 @@ export const EditEmployee = route => {
         gender: ""
     });
 
-    const [currentUserId, setcurrentUserId] = useState("");
-
-    setcurrentUserId(route.match.params.id);
+    const currentUserId = route.match.params.id
 
     useEffect(() => {
         const fetchEmployeeById = async () => {
@@ -39,7 +37,7 @@ export const EditEmployee = route => {
         } else {
             setSeletedUser(employees.find(emp => emp.id === currentUserId));
         }
-    }, [currentUserId]);
+    }, []);
 
     const onSubmit = e => {
         e.preventDefault();
