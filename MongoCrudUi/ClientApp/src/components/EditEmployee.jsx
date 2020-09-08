@@ -33,7 +33,7 @@ export const EditEmployee = route => {
         }
 
         if (employees.length === 0) {
-            fetchEmployeeById(currentUserId);
+            fetchEmployeeById();
         } else {
             setSeletedUser(employees.find(emp => emp.id === currentUserId));
         }
