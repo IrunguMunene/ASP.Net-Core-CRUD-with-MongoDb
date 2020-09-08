@@ -3,10 +3,6 @@ import { GlobalContext } from '../Context/GlobalContext';
 import axios from 'axios';
 import { TEXTS } from '../Constants';
 
-const divMarginStyle = {
-    margin: "15px",
-};
-
 const controlMarginStyle = {
     margin: "5px",
 };
@@ -67,7 +63,7 @@ export const Filter = () => {
     }, [filterValue]);
 
     return (
-        <div style={divMarginStyle}>
+        <div>
             <div className="row">
                 <form className="form-inline well">
                     <label class="control-label" style={controlMarginStyle}>Show Employee(s) whose</label>

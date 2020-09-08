@@ -5,15 +5,18 @@ import { Filter } from './Filter';
 
 export const EmployeeList = () => {
     const { employees } = useContext(GlobalContext);
+    const divMargin = {
+        marginTop: "10px",
+    }
 
     if (!employees.length) {
         return <p className="text-warning">There is no employee data to display.</p>;
     }
 
     return (
-        <div>
+        <div style={{ marginTop: "50px" }}>
             <Filter />
-            <div className="row table-responsive-sm">
+            <div className="row table-responsive-sm" style={divMargin}>
                 <table className="table table-bordered table-striped table-sm">
                     <thead className="thead-dark">
                         <tr>
