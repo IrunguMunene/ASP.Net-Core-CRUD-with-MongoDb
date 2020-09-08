@@ -15,8 +15,8 @@ export const App = () => {
             <div className="card">
                 <div className="card-body">
                     <Router>
-                        <Layout />
                         <GlobalProvider>
+                            <Layout />
                             <Switch>
                                 <Route exact path='/CreateEmployee' component={CreateEmployee} />
                                 <Route exact path='/EmployeeList' component={EmployeeList} />

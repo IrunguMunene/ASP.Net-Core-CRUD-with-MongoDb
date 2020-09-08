@@ -61,6 +61,11 @@ namespace MongoCrudUi.Repositories
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
+        public IEnumerable<Employee> GetEmployeeByName(string employeeName)
+        {
+            return Collection.AsQueryable().Where(e => e.Name.ToLower().Contains(employeeName)).ToList();
+        }
+
         /// <summary>
         /// The function returns a list of all the employees, sort by age ascending.
         /// A show case of using simple aggregation as per test requirement

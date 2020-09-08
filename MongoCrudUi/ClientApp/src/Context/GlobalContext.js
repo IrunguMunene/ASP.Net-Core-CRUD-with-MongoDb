@@ -41,24 +41,35 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [refreshProvider, setRefreshProvider] = useState(true);
+    const [searchEmployeeName, setSearchEmployeeName] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios(TEXTS.BASE_URL + 'Employee/LoadEmployees',);
-            dispatch({ type: "RETRIEVE", payload: result.data });
+            if (searchEmployeeName) {
+                axios.get(TEXTS.BASE_URL + 'Employee/GetByName', { params: { employeeName: searchEmployeeName } }).then(response => {
+                    dispatch({ type: "RETRIEVE", payload: response.data });
+                }).catch(error => {
+                    console.log(error);
+                });
+            } else {
+                const result = await axios(TEXTS.BASE_URL + 'Employee/LoadEmployees',);
+                dispatch({ type: "RETRIEVE", payload: result.data });
+            }
         };
 
         if (refreshProvider) {
             fetchData();
             setRefreshProvider(false);
         }
-    }, [refreshProvider]);
+    }, [refreshProvider, searchEmployeeName]);
 
     return (
         <GlobalContext.Provider value={{
             employees: state.employees,
             dispatch,
             setRefreshProvider,
+            searchEmployeeName,
+            setSearchEmployeeName
         }}>
             {children}
         </GlobalContext.Provider>

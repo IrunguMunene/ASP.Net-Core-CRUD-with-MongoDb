@@ -54,6 +54,20 @@ namespace MongoCrudUi.Controllers
             }
         }
 
+        [Route("GetByName"), HttpGet]
+        public IEnumerable<Employee> GetEmployeeByName(string employeeName)
+        {
+            try
+            {
+                var employee = employeeRepository.GetEmployeeByName(employeeName);
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [Route("CreateEmployee"), HttpPost]
         public async Task<IActionResult> CreateEmployee(EmployeeModel model)
         {

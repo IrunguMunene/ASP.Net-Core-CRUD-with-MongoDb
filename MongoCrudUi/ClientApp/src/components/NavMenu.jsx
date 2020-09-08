@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavbarBrand, NavItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { GlobalContext } from '../Context/GlobalContext';
 import './NavMenu.css';
 
+
 export const NavMenu = () => {
+    let history = useHistory();
+
+    const { setSearchEmployeeName, setRefreshProvider } = useContext(GlobalContext);
+    
+
+    const searchEmployee = e => {
+        e.preventDefault();
+        history.push("/EmployeeList");
+    }
+
+    const handleOnChange = (value) => {
+        setSearchEmployeeName(value);
+        setRefreshProvider(true);
+    }
+
     return (
         <nav className="navbar navbar-default navbar-expand-lg navbar-dark bg-primary navbar-fixed-top rounded">
             <div className="container-fluid">
@@ -23,6 +41,11 @@ export const NavMenu = () => {
                         <NavItem>
                             <Link to={'/GoodBinaryStringChecker'} className="nav-link text-dark">Task 2 Solution</Link>
                         </NavItem>
+                        <form className="form-inline" onSubmit={searchEmployee}>
+                            <input className="form-control mr-sm-2" type="search" placeholder="Name Search" aria-label="Search"
+                                onChange={e => handleOnChange(e.target.value)} />
+                            <button className="btn btn-outline-success text-dark my-2 my-sm-0" type="submit">Search</button>
+                        </form>
                     </ul>
                 </div>
             </div>
