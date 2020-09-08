@@ -23,7 +23,7 @@ export const NavMenu = () => {
     }
 
     return (
-        <nav className="navbar navbar-default navbar-expand-lg navbar-dark bg-primary navbar-fixed-top rounded">
+        <nav className="navbar navbar-default navbar-expand-lg navbar-dark bg-primary navbar-fixed-top rounded py-md-1">
             <div className="container-fluid">
                 <NavbarBrand tag={Link} to="/">Secure Privacy Code Test</NavbarBrand>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
