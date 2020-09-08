@@ -64,7 +64,7 @@ export const Filter = () => {
     }, [filterValue]);
 
     return (
-        <div>
+        <div style={{ margin: "10px" }}>
             <div style={divStyle}>
                 <span>
                     Show Employee(s) whose &nbsp;
