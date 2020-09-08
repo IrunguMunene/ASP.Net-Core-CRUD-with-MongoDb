@@ -6,7 +6,7 @@ import { Filter } from './Filter';
 export const EmployeeList = () => {
     const { employees } = useContext(GlobalContext);
     const divMargin = {
-        marginTop: "30px",
+        marginTop: "10px",
     }
 
     if (!employees.length) {
