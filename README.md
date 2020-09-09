@@ -1,7 +1,7 @@
 # SecurePrivacyTest
 
 The application performs all CRUD functions to a mongoDb database called SecurePrivacyTest and provides a link to the Binary string task, these as per the Test requirements. 
-It is developed using Visual Studio 2019 express edition and has a react front end using axios to make calls to a ASP.NET Core 3.1 WebApi controller and context API for state management.
+It is developed using Visual Studio 2019 express edition and has a react front end using axios to make calls to a ASP.NET Core 3.1 WebApi controller and react context API for state management.
 
 No documents have been prepopulated to the database so as to allow a clean database from scratch for all the CRUD functions to be tested. 
 Clicking the Add Employees link will load a form to register an employee, and upon saving, the list of Employees page is loaded listing all employees added.
