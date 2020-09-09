@@ -53,13 +53,24 @@ export const GlobalProvider = ({ children }) => {
             if (searchEmployeeName) {
                 if (filterByField && filterValue) {
                     axios.get(TEXTS.BASE_URL + 'Employee/SearchByMultipleFields',
-                        { params: { fieldName: filterByField, fieldValue: filterValue, employeeName: searchEmployeeName } }).then(response => {
+                        {
+                            params: {
+                                fieldName: filterByField,
+                                fieldValue: filterValue,
+                                employeeName: searchEmployeeName
+                            }
+                        }
+                    ).then(response => {
                         dispatch({ type: "RETRIEVE", payload: response.data });
                     }).catch(error => {
                         console.log(error);
                     });
                 } else {
-                    axios.get(TEXTS.BASE_URL + 'Employee/GetByName', { params: { employeeName: searchEmployeeName } }).then(response => {
+                    axios.get(TEXTS.BASE_URL + 'Employee/GetByName', {
+                        params: {
+                            employeeName: searchEmployeeName
+                        }
+                    }).then(response => {
                         dispatch({ type: "RETRIEVE", payload: response.data });
                     }).catch(error => {
                         console.log(error);
@@ -67,7 +78,11 @@ export const GlobalProvider = ({ children }) => {
                 }
             } else {
                 if (filterByField && filterValue) {
-                    axios.get(TEXTS.BASE_URL + 'Employee/GetFilteredEmployees', { params: { fieldName: filterByField, fieldValue: filterValue } }).then(response => {
+                    axios.get(TEXTS.BASE_URL + 'Employee/GetFilteredEmployees', {
+                        params: {
+                            fieldName: filterByField, fieldValue: filterValue
+                        }
+                    }).then(response => {
                         setEmployeeCount(response.data.totalEmployees);
                         setAverageAge(response.data.averageAge.toFixed(2));
                         setOldestEmployee(response.data.oldestEmployee);
