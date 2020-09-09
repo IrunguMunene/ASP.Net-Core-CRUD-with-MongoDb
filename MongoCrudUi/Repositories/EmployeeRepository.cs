@@ -63,7 +63,14 @@ namespace MongoCrudUi.Repositories
 
         public IEnumerable<Employee> GetEmployeeByName(string employeeName)
         {
-            return Collection.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName)).ToList();
+            return Collection.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName.ToLower())).ToList();
+        }
+
+        public async Task<IEnumerable<Employee>> SearchByMultipleFields(string fieldName, string fieldValue, string employeeName)
+        {
+            var filter = CreateFieldFilter(fieldName, fieldValue);
+            var employees = await Collection.Find(filter).ToListAsync();
+            return employees.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName.ToLower())).ToList();
         }
 
         /// <summary>
@@ -79,6 +86,19 @@ namespace MongoCrudUi.Repositories
                     .ThenBy(e => e.Designation).ToListAsync();
 
         public async Task<EmployeeAggregateModel> GetFilteredEmployees(string fieldName, string fieldValue)
+        {
+            var filter = CreateFieldFilter(fieldName, fieldValue);
+            var employees = await Collection.Find(filter).ToListAsync();
+            var avgAge = employees.Select(e => e.Age).Average();
+
+            return new EmployeeAggregateModel
+            {
+                Employees = employees,
+                AverageAge = avgAge
+            };
+        }
+
+        private FilterDefinition<Employee> CreateFieldFilter(string fieldName, string fieldValue)
         {
             FilterDefinition<Employee> filter = null;
 
@@ -101,14 +121,7 @@ namespace MongoCrudUi.Repositories
                     break;
             }
 
-            var employees = await Collection.Find(filter).ToListAsync();
-            var avgAge = employees.Select(e => e.Age).Average();
-
-            return new EmployeeAggregateModel
-            {
-                Employees = employees,
-                AverageAge = avgAge
-            };
+            return filter;
         }
     }
 }

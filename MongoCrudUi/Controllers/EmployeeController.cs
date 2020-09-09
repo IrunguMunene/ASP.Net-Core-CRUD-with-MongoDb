@@ -59,8 +59,22 @@ namespace MongoCrudUi.Controllers
         {
             try
             {
-                var employee = employeeRepository.GetEmployeeByName(employeeName);
-                return employee;
+                var employees = employeeRepository.GetEmployeeByName(employeeName);
+                return employees;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [Route("SearchByMultipleFields"), HttpGet]
+        public Task<IEnumerable<Employee>> SearchByMultipleFields(string fieldName, string fieldValue, string employeeName)
+        {
+            try
+            {
+                var employees = employeeRepository.SearchByMultipleFields(fieldName, fieldValue, employeeName);
+                return employees;
             }
             catch (Exception ex)
             {

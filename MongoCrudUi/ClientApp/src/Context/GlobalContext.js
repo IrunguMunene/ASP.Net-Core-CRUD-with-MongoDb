@@ -42,18 +42,43 @@ export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [refreshProvider, setRefreshProvider] = useState(true);
     const [searchEmployeeName, setSearchEmployeeName] = useState("");
+    const [filterByField, setFilterByField] = useState("");
+    const [filterValue, setFilterValue] = useState("");
+    const [employeeCount, setEmployeeCount] = useState(0);
+    const [averageAge, setAverageAge] = useState(0.0);
+    const [oldestEmployee, setOldestEmployee] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
             if (searchEmployeeName) {
-                axios.get(TEXTS.BASE_URL + 'Employee/GetByName', { params: { employeeName: searchEmployeeName } }).then(response => {
-                    dispatch({ type: "RETRIEVE", payload: response.data });
-                }).catch(error => {
-                    console.log(error);
-                });
+                if (filterByField && filterValue) {
+                    axios.get(TEXTS.BASE_URL + 'Employee/SearchByMultipleFields',
+                        { params: { fieldName: filterByField, fieldValue: filterValue, employeeName: searchEmployeeName } }).then(response => {
+                        dispatch({ type: "RETRIEVE", payload: response.data });
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                } else {
+                    axios.get(TEXTS.BASE_URL + 'Employee/GetByName', { params: { employeeName: searchEmployeeName } }).then(response => {
+                        dispatch({ type: "RETRIEVE", payload: response.data });
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
             } else {
-                const result = await axios(TEXTS.BASE_URL + 'Employee/LoadEmployees',);
-                dispatch({ type: "RETRIEVE", payload: result.data });
+                if (filterByField && filterValue) {
+                    axios.get(TEXTS.BASE_URL + 'Employee/GetFilteredEmployees', { params: { fieldName: filterByField, fieldValue: filterValue } }).then(response => {
+                        setEmployeeCount(response.data.totalEmployees);
+                        setAverageAge(response.data.averageAge.toFixed(2));
+                        setOldestEmployee(response.data.oldestEmployee);
+                        dispatch({ type: "RETRIEVE", payload: response.data.employees });
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                } else {
+                    const result = await axios(TEXTS.BASE_URL + 'Employee/LoadEmployees',);
+                    dispatch({ type: "RETRIEVE", payload: result.data });
+                }
             }
         };
 
@@ -68,8 +93,12 @@ export const GlobalProvider = ({ children }) => {
             employees: state.employees,
             dispatch,
             setRefreshProvider,
-            searchEmployeeName,
-            setSearchEmployeeName
+            filterByField, setFilterByField,
+            filterValue, setFilterValue,
+            employeeCount, setEmployeeCount,
+            averageAge, setAverageAge,
+            oldestEmployee, setOldestEmployee,
+            searchEmployeeName, setSearchEmployeeName
         }}>
             {children}
         </GlobalContext.Provider>

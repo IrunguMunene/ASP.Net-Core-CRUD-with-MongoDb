@@ -11,6 +11,7 @@ namespace MongoCrudUi.Interfaces
         Task<IEnumerable<Employee>> GetEmployeesAsync();
         Task<Employee> GetEmployeeById(string id);
         IEnumerable<Employee> GetEmployeeByName(string employeeName);
+        Task<IEnumerable<Employee>> SearchByMultipleFields(string fieldName, string fieldValue, string employeeName);
         Task<EmployeeAggregateModel> GetFilteredEmployees(string fieldName, string fieldValue);
         Task<List<string>> GetDistinctFieldValuesAsync(string fieldName);
     }

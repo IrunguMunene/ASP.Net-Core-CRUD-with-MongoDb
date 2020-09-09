@@ -12,7 +12,7 @@ import './custom.css'
 export const App = () => {
     return (
         <div>
-            <div className="card">
+            <div className="card border-0">
                 <div className="card-body">
                     <Router>
                         <GlobalProvider>

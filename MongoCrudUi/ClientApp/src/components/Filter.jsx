@@ -8,13 +8,10 @@ const controlMarginStyle = {
 };
 
 export const Filter = () => {
-    const { dispatch, setRefreshProvider } = useContext(GlobalContext);
-    const [filterByField, setFilterByField] = useState("");
+    const { dispatch, setRefreshProvider, filterByField, employeeCount, setEmployeeCount,
+            averageAge, setAverageAge, oldestEmployee, setOldestEmployee,
+            setFilterByField, filterValue, setFilterValue } = useContext(GlobalContext);
     const [filterByDistinctValues, setFilterByDistinctValues] = useState([]);
-    const [filterValue, setFilterValue] = useState("");
-    const [employeeCount, setEmployeeCount] = useState(0);
-    const [averageAge, setAverageAge] = useState(0.0);
-    const [oldestEmployee, setOldestEmployee] = useState("");
 
     const onFilterByFieldSelectionChanged = value => {
         setFilterByField(value);
@@ -41,6 +38,7 @@ export const Filter = () => {
             setAverageAge(0.0);
             setOldestEmployee("");
             setFilterByDistinctValues([]);
+            setFilterValue("");
             setRefreshProvider(true);
         }
     }, [filterByField]);
