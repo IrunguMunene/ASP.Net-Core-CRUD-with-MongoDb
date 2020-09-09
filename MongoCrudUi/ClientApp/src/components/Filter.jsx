@@ -23,6 +23,11 @@ export const Filter = () => {
         }
     }
 
+    const onClick = () => {
+        setFilterByField("");
+        setRefreshProvider(true);
+    }
+
     useEffect(() => {
         const fetchFilterByUniqueValues = async () => {
             axios.get(TEXTS.BASE_URL + 'Employee/GetDistinctValues', {
@@ -109,6 +114,11 @@ export const Filter = () => {
                                 ))
                             }
                         </select>
+                    </div>
+                    <div className="form-group">
+                        <button className="btn btn-outline-info text-dark my-2 my-sm-0" style={controlMarginStyle} type="button"
+                            onClick={onClick}>Clear Filter
+                        </button>
                     </div>
                 </form>
             </div>
