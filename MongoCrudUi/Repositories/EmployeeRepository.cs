@@ -80,10 +80,10 @@ namespace MongoCrudUi.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Employee>> GetEmployeesAsync() =>
             await Collection.Aggregate()
-                    .SortBy(e => e.Department)
-                    .ThenBy(e => e.Age)
-                    .ThenBy(e => e.Name)
-                    .ThenBy(e => e.Designation).ToListAsync();
+                    .SortBy(e => e.Name)
+                    .ThenBy(e => e.Department)
+                    .ThenBy(e => e.Designation)
+                    .ThenBy(e => e.Age).ToListAsync();
 
         public async Task<EmployeeAggregateModel> GetFilteredEmployees(string fieldName, string fieldValue)
         {
