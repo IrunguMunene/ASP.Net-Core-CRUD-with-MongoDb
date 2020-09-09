@@ -96,7 +96,7 @@ export const EditEmployee = route => {
                                                 onChange={e => handleOnChange("designation", e.target.value)} />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input type="number" name="Age" id="Age" placeholder="Age" value={selectedUser.age}
+                                            <Input min="1" max="100" type="number" name="Age" id="Age" placeholder="Age" value={selectedUser.age}
                                                 onChange={e => handleOnChange("age", e.target.value)} />
                                         </InputGroup>
                                         <InputGroup className="mb-3">

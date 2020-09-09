@@ -62,7 +62,7 @@ export const CreateEmployee = () => {
                                                 onChange={e => setDesignation(e.target.value)} />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input type="number" name="Age" id="Age" placeholder="Age" value={age} onChange={e => setAge(e.target.value)} />
+                                            <Input type="number" min="1" max="100" name="Age" id="Age" placeholder="Age" value={age} onChange={e => setAge(e.target.value)} />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="City" id="City" placeholder="City" value={city} onChange={e => setCity(e.target.value)} />
