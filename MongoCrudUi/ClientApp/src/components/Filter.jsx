@@ -9,7 +9,7 @@ const controlMarginStyle = {
 
 export const Filter = () => {
     const { dispatch, setRefreshProvider, filterByField, employeeCount, setEmployeeCount,
-            averageAge, setAverageAge, oldestEmployee, setOldestEmployee,
+        averageAge, setAverageAge, oldestEmployee, setOldestEmployee, searchEmployeeName,
             setFilterByField, filterValue, setFilterValue } = useContext(GlobalContext);
     const [filterByDistinctValues, setFilterByDistinctValues] = useState([]);
 
@@ -45,14 +45,23 @@ export const Filter = () => {
 
     useEffect(() => {
         const fetchEmployeesByFilter = async () => {
-            axios.get(TEXTS.BASE_URL + 'Employee/GetFilteredEmployees', { params: { fieldName: filterByField, fieldValue: filterValue } }).then(response => {
-                setEmployeeCount(response.data.totalEmployees);
-                setAverageAge(response.data.averageAge.toFixed(2));
-                setOldestEmployee(response.data.oldestEmployee);
-                dispatch({ type: "RETRIEVE", payload: response.data.employees });
-            }).catch(error => {
-                console.log(error);
-            });
+            if (searchEmployeeName) {
+                axios.get(TEXTS.BASE_URL + 'Employee/SearchByMultipleFields',
+                    { params: { fieldName: filterByField, fieldValue: filterValue, employeeName: searchEmployeeName } }).then(response => {
+                        dispatch({ type: "RETRIEVE", payload: response.data });
+                }).catch(error => {
+                    console.log(error);
+                });
+            } else {
+                axios.get(TEXTS.BASE_URL + 'Employee/GetFilteredEmployees', { params: { fieldName: filterByField, fieldValue: filterValue } }).then(response => {
+                    setEmployeeCount(response.data.totalEmployees);
+                    setAverageAge(response.data.averageAge.toFixed(2));
+                    setOldestEmployee(response.data.oldestEmployee);
+                    dispatch({ type: "RETRIEVE", payload: response.data.employees });
+                }).catch(error => {
+                    console.log(error);
+                });
+            }
         }
 
         if (filterValue) {
