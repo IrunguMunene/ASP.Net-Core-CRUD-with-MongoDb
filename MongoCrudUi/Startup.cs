@@ -37,7 +37,12 @@ namespace MongoCrudUi
             services.AddSingleton<IMongoClient>(mc =>
             {
                 // change this value to reflect the right connection string.
-                return new MongoClient("mongodb://localhost:27017");
+
+                //Uncomment the following out if not using a replica set
+                //return new MongoClient("mongodb://localhost:27017/?replicaSet=rs0")
+
+                // Comment the following out if not using a replica set
+                return new MongoClient("mongodb://localhost:27017/?replicaSet=rs0"); 
             });
 
             // IoC declaration for starting a session of mongodb transaction,

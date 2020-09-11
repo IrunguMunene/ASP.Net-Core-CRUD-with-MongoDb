@@ -85,12 +85,12 @@ namespace MongoCrudUi.Controllers
         [Route("CreateEmployee"), HttpPost]
         public async Task<IActionResult> CreateEmployee(EmployeeModel model)
         {
-            // Start a transaction to create new employee
-            // If working with replica sets uncomment to make use of transactions
-            //clientSessionHandle.StartTransaction();
-
             try
             {
+                // Start a transaction to create new employee
+                // If not working with replica sets comment the following out otherwise will generate an error
+                clientSessionHandle.StartTransaction();
+
                 var newEmployee = new Employee 
                                     { 
                                         Age = model.Age,
@@ -102,13 +102,15 @@ namespace MongoCrudUi.Controllers
                                         Name = model.Name
                                     };
                 await employeeRepository.InsertAsync(newEmployee);
-                // If working with replica sets uncomment to make use of transactions
-                //await clientSessionHandle.CommitTransactionAsync();
+
+                // If not working with replica sets comment the following out
+                await clientSessionHandle.CommitTransactionAsync();
 
                 return Ok();
             }
             catch (Exception ex)
             {
+                // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
                 return BadRequest(ex);
             }
@@ -117,11 +119,11 @@ namespace MongoCrudUi.Controllers
         [Route("UpdateEmployee"), HttpPut]
         public async Task<IActionResult> UpdateEmployee(EmployeeModel model)
         {
-            // If working with replica sets uncomment to make use of transactions
-            //clientSessionHandle.StartTransaction();
-
             try
             {
+                // If not working with replica sets comment the following out
+                clientSessionHandle.StartTransaction();
+
                 var updateEmployee = new Employee
                 {
                     Age = model.Age,
@@ -136,13 +138,14 @@ namespace MongoCrudUi.Controllers
 
                 await employeeRepository.UpdateAsync(updateEmployee);
 
-                // If working with replica sets uncomment to make use of transactions
-                //await clientSessionHandle.CommitTransactionAsync();
+                // If not working with replica sets comment the following out
+                await clientSessionHandle.CommitTransactionAsync();
 
                 return Ok();
             }
             catch (Exception ex)
             {
+                // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
                 throw ex;
             }
@@ -153,12 +156,19 @@ namespace MongoCrudUi.Controllers
         {
             try
             {
+                // If not working with replica sets comment the following out
+                clientSessionHandle.StartTransaction();
+
                 await employeeRepository.DeleteAsync(id);
+
+                // If not working with replica sets comment the following out
+                await clientSessionHandle.CommitTransactionAsync();
 
                 return Ok();
             }
             catch (Exception ex)
             {
+                // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
                 throw ex;
             }
