@@ -16,7 +16,7 @@ Clicking the Task 2 Solution will show the solution to the 2nd task in the test.
 
 The code core functions are mostly in the following C# files; BaseRepository, EmployeeRepository and EmployeeController. 
 I have endeavoured to showcase as much as I can my coding skills. The react part of the application is found under ClientApp. On StartUp.cs under the ConfigureServices function, 
-change the connection string to the databse accordingly. Also in the ClientUp/src folder in the file Constants.Js, change this http://localhost:58440 so as to point to 
+change the connection string to the database accordingly. NOTE: The code as is, is tested against replica sets and hence makes use of transactions, if not working with replica sets changes will have to be made in the startup ConfigureServices function and in the EmployeeController CreateEmployee, UpdateEmployee and DeleteEmployee functions as indicated. In addition, in the ClientUp/src folder in the file Constants.Js, change this http://localhost:58440 so as to point to 
 the correct endpoint as per your Visual Studio setup.
 
 I have done my best to comment on the code but where anything is not clear kindly feel free to reach out.
