@@ -25,7 +25,10 @@ export const CreateEmployee = () => {
         e.preventDefault();
 
         if (!name || !department || !designation || !age || !city || !country) {
-            alert("All Fields are required.")
+            alert("All Fields are required.");
+        }
+        else if (age < 18) {
+            alert("Age must be 18 and above.")
         } else {
             axios.post(TEXTS.BASE_URL + 'Employee/CreateEmployee', {
                 name, department, designation, age: parseInt(age),
@@ -35,7 +38,7 @@ export const CreateEmployee = () => {
                 history.push("/EmployeeList");
             }).catch(error => {
                 console.log(error);
-                alert("An error occurred. Trying to save a duplicate employee?");
+                alert(`An error occurred. ${error}`);
             });
         }
     }
@@ -51,29 +54,29 @@ export const CreateEmployee = () => {
                                     <Form onSubmit={onSubmit}>
                                         <h3>Register Employee</h3>
                                         <InputGroup className="mb-3">
-                                            <Input type="text" name="Name" id="Name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+                                            <Input type="text" name="Name" id="Name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Department" id="Department" placeholder="Department" value={department}
-                                                onChange={e => setDepartment(e.target.value)} />
+                                                onChange={e => setDepartment(e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Designation" id="Designation" placeholder="Designation" value={designation}
-                                                onChange={e => setDesignation(e.target.value)} />
+                                                onChange={e => setDesignation(e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input type="number" min="1" max="100" name="Age" id="Age" placeholder="Age" value={age} onChange={e => setAge(e.target.value)} />
+                                            <Input type="number" min="18" max="70" name="Age" id="Age" placeholder="Age" value={age} onChange={e => setAge(e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input type="text" name="City" id="City" placeholder="City" value={city} onChange={e => setCity(e.target.value)} />
+                                            <Input type="text" name="City" id="City" placeholder="City" value={city} onChange={e => setCity(e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Country" id="Country" placeholder="Country" value={country}
-                                                onChange={e => setCountry(e.target.value)} />
+                                                onChange={e => setCountry(e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Gender" id="Gender" placeholder="Gender" value={gender}
-                                                onChange={e => setGender(e.target.value)} />
+                                                onChange={e => setGender(e.target.value)} required />
                                         </InputGroup>
                                         <CardFooter className="p-0">
                                             <Row>

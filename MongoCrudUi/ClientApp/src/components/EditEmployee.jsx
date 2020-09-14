@@ -53,6 +53,10 @@ export const EditEmployee = route => {
             return;
         }
 
+        if (selectedUser.age < 18) {
+            alert("Age must be 18 and above.")
+        }
+
         axios.put(TEXTS.BASE_URL + 'Employee/UpdateEmployee', {
             id: selectedUser.id,
             Name: selectedUser.name,
@@ -85,31 +89,31 @@ export const EditEmployee = route => {
                                         <h3>Update Employee</h3>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Name" id="Name" placeholder="Name" value={selectedUser.name}
-                                                onChange={e => handleOnChange("name", e.target.value)} />
+                                                onChange={e => handleOnChange("name", e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Department" id="Department" placeholder="Department" value={selectedUser.department}
-                                                onChange={e => handleOnChange("department", e.target.value)} />
+                                                onChange={e => handleOnChange("department", e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Designation" id="Designation" placeholder="Designation" value={selectedUser.designation}
-                                                onChange={e => handleOnChange("designation", e.target.value)} />
+                                                onChange={e => handleOnChange("designation", e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input min="1" max="100" type="number" name="Age" id="Age" placeholder="Age" value={selectedUser.age}
-                                                onChange={e => handleOnChange("age", e.target.value)} />
+                                            <Input type="number" type="number" min="18" max="70" name="Age" id="Age" placeholder="Age" value={selectedUser.age}
+                                                onChange={e => handleOnChange("age", e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="City" id="City" placeholder="City" value={selectedUser.city}
-                                                onChange={e => handleOnChange("city", e.target.value)} />
+                                                onChange={e => handleOnChange("city", e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Country" id="Country" placeholder="Country" value={selectedUser.country}
-                                                onChange={e => handleOnChange("country", e.target.value)} />
+                                                onChange={e => handleOnChange("country", e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <Input type="text" name="Gender" id="Gender" placeholder="Gender" value={selectedUser.gender}
-                                                onChange={e => handleOnChange("gender", e.target.value)} />
+                                                onChange={e => handleOnChange("gender", e.target.value)} required />
                                         </InputGroup>
                                         <CardFooter className="p-0">
                                             <Row>
