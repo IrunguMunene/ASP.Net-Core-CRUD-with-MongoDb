@@ -123,7 +123,7 @@ export const EditEmployee = route => {
                                                 value={selectedUser.country} required>
                                                 <option key={0} value="">----Select----</option>
                                                 {
-                                                    countries.map(country => (
+                                                    countries.sort((a, b) => (a.name > b.name) ? 1 : -1).map(country => (
                                                         <option key={country.alpha3Code} value={country.name}>{country.name}</option>
                                                     ))
                                                 }

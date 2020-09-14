@@ -88,7 +88,7 @@ export const CreateEmployee = () => {
                                             <select className="custom-select" data-live-search="true" onChange={e => setCountry(e.target.value)} required>
                                                 <option key={0} value="">----Select----</option>
                                                 {
-                                                    countries.map(country => (
+                                                    countries.sort((a, b) => (a.name > b.name) ? 1 : -1).map(country => (
                                                         <option key={country.alpha3Code} value={country.name}>{country.name}</option>
                                                     ))
                                                 }
