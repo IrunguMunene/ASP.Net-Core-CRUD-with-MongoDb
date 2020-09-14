@@ -39,7 +39,7 @@ namespace MongoCrudUi
                 // change this value to reflect the right connection string.
 
                 //Uncomment the following out if not using a replica set
-                //return new MongoClient("mongodb://localhost:27017/?replicaSet=rs0")
+                //return new MongoClient("mongodb://localhost:27017")
 
                 // Comment the following out if not using a replica set
                 return new MongoClient("mongodb://localhost:27017/?replicaSet=rs0"); 
