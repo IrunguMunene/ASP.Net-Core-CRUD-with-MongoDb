@@ -1,4 +1,4 @@
-﻿import React, { useState, useContext, Fragment } from 'react';
+﻿import React, { useState, useContext, Fragment, useEffect } from 'react';
 import { GlobalContext } from '../Context/GlobalContext';
 import { useHistory } from 'react-router-dom';
 import {
@@ -18,8 +18,21 @@ export const CreateEmployee = () => {
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
     const [gender, setGender] = useState("");
+    const [countries, setCountries] = useState([]);
 
     let history = useHistory();
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            axios.get("https://restcountries.eu/rest/v2/all").then(response => {
+                setCountries(response.data);
+            }).catch(error => {
+                console.log(`An error occurred. ${error}`)
+            });
+        }
+
+        fetchCountries();
+    }, []);
 
     const onSubmit = e => {
         e.preventDefault();
@@ -68,15 +81,21 @@ export const CreateEmployee = () => {
                                             <Input type="number" min="18" max="70" name="Age" id="Age" placeholder="Age" value={age} onChange={e => setAge(e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input type="text" name="City" id="City" placeholder="City" value={city} onChange={e => setCity(e.target.value)} required />
-                                        </InputGroup>
-                                        <InputGroup className="mb-3">
-                                            <Input type="text" name="Country" id="Country" placeholder="Country" value={country}
-                                                onChange={e => setCountry(e.target.value)} required />
-                                        </InputGroup>
-                                        <InputGroup className="mb-3">
                                             <Input type="text" name="Gender" id="Gender" placeholder="Gender" value={gender}
                                                 onChange={e => setGender(e.target.value)} required />
+                                        </InputGroup>
+                                        <InputGroup className="mb-3">
+                                            <select className="custom-select" data-live-search="true" onChange={e => setCountry(e.target.value)} required>
+                                                <option key={0} value="">----Select----</option>
+                                                {
+                                                    countries.map(country => (
+                                                        <option key={country.alpha3Code} value={country.name}>{country.name}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </InputGroup>
+                                        <InputGroup className="mb-3">
+                                            <Input type="text" name="City" id="City" placeholder="City" value={city} onChange={e => setCity(e.target.value)} required />
                                         </InputGroup>
                                         <CardFooter className="p-0">
                                             <Row>

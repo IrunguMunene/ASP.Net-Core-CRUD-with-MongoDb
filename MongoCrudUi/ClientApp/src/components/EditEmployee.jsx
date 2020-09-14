@@ -20,6 +20,7 @@ export const EditEmployee = route => {
         country: "",
         gender: ""
     });
+    const [countries, setCountries] = useState([]);
 
     const currentUserId = route.match.params.id
 
@@ -31,6 +32,16 @@ export const EditEmployee = route => {
                 console.log(error);
             });
         }
+
+        const fetchCountries = async () => {
+            axios.get("https://restcountries.eu/rest/v2/all").then(response => {
+                setCountries(response.data);
+            }).catch(error => {
+                console.log(`An error occurred. ${error}`)
+            });
+        }
+
+        fetchCountries();
 
         if (employees.length === 0) {
             fetchEmployeeById();
@@ -104,16 +115,23 @@ export const EditEmployee = route => {
                                                 onChange={e => handleOnChange("age", e.target.value)} required />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input type="text" name="City" id="City" placeholder="City" value={selectedUser.city}
-                                                onChange={e => handleOnChange("city", e.target.value)} required />
-                                        </InputGroup>
-                                        <InputGroup className="mb-3">
-                                            <Input type="text" name="Country" id="Country" placeholder="Country" value={selectedUser.country}
-                                                onChange={e => handleOnChange("country", e.target.value)} required />
-                                        </InputGroup>
-                                        <InputGroup className="mb-3">
                                             <Input type="text" name="Gender" id="Gender" placeholder="Gender" value={selectedUser.gender}
                                                 onChange={e => handleOnChange("gender", e.target.value)} required />
+                                        </InputGroup>
+                                        <InputGroup className="mb-3">
+                                            <select className="custom-select" data-live-search="true" onChange={e => handleOnChange("country", e.target.value)}
+                                                value={selectedUser.country} required>
+                                                <option key={0} value="">----Select----</option>
+                                                {
+                                                    countries.map(country => (
+                                                        <option key={country.alpha3Code} value={country.name}>{country.name}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </InputGroup>
+                                        <InputGroup className="mb-3">
+                                            <Input type="text" name="City" id="City" placeholder="City" value={selectedUser.city}
+                                                onChange={e => handleOnChange("city", e.target.value)} required />
                                         </InputGroup>
                                         <CardFooter className="p-0">
                                             <Row>
