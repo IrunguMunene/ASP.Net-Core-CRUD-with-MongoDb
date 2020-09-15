@@ -5,7 +5,6 @@ using MongoCrudUi.Models;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace MongoCrudUi.Controllers
