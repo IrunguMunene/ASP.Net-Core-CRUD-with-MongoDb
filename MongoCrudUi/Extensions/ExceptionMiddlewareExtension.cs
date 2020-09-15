@@ -3,11 +3,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using MongoCrudUi.Interfaces;
 using MongoCrudUi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace MongoCrudUi.Extensions
 {
