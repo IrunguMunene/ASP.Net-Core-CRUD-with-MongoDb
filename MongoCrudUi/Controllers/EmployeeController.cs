@@ -37,7 +37,6 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -52,7 +51,6 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -67,7 +65,6 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -82,7 +79,6 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -119,7 +115,6 @@ namespace MongoCrudUi.Controllers
             {
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
-                loggerManager.LogError(ex.Message);
                 return BadRequest(ex);
             }
         }
@@ -157,7 +152,6 @@ namespace MongoCrudUi.Controllers
             {
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -183,7 +177,6 @@ namespace MongoCrudUi.Controllers
             {
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -198,7 +191,6 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -213,7 +205,6 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
-                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoCrudUi.Extensions;
 using MongoCrudUi.Interfaces;
 using MongoCrudUi.Logger;
 using MongoCrudUi.Repositories;
@@ -61,7 +62,7 @@ namespace MongoCrudUi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
@@ -71,6 +72,8 @@ namespace MongoCrudUi
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.ConfigureExceptionHandler(logger);
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
