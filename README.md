@@ -12,7 +12,6 @@ a small summary of the employees that meet the criteria is displayed. This was d
 the test requirements.
 
 Clicking the Employees link will load the Employee list displaying any employees added.
-Clicking the Task 2 Solution will show the solution to the 2nd task in the test.
 
 The code core functions are mostly in the following C# files; BaseRepository, EmployeeRepository and EmployeeController. 
 I have endeavoured to showcase as much as I can my coding skills. The react part of the application is found under ClientApp. On StartUp.cs under the ConfigureServices function, 
