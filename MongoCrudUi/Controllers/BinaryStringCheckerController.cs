@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MongoCrudUi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,15 @@ namespace MongoCrudUi.Controllers
     [ApiController]
     public class BinaryStringCheckerController : ControllerBase
     {
+        #region Properties
+        private readonly ILoggerManager loggerManager;
+        #endregion
+
+        #region Constructor
+        public BinaryStringCheckerController(ILoggerManager logger) =>
+            loggerManager = logger;
+        #endregion
+
         #region Task 2 Solution
         [Route("IsBinaryStringGood"), HttpGet]
         public ActionResult<bool> IsBinaryStringGood(string binaryString)
@@ -33,10 +43,13 @@ namespace MongoCrudUi.Controllers
                     }
                 }
 
+                loggerManager.LogInfo($"Checked {binaryString} and found it to be {(stringIsGood ? "Good" : "Bad")}.");
+
                 return stringIsGood;
             }
             catch (Exception ex)
             {
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
