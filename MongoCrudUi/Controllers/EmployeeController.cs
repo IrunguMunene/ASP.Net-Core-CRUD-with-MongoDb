@@ -5,6 +5,7 @@ using MongoCrudUi.Models;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace MongoCrudUi.Controllers
@@ -17,12 +18,13 @@ namespace MongoCrudUi.Controllers
 
         private readonly IEmployeeRepository employeeRepository;
         private readonly IClientSessionHandle clientSessionHandle;
+        private readonly ILoggerManager loggerManager;
 
         #endregion
 
         #region Constructor
-        public EmployeeController(IEmployeeRepository employeeRepo, IClientSessionHandle sessionHandle) =>
-            (employeeRepository, clientSessionHandle) = (employeeRepo, sessionHandle);
+        public EmployeeController(IEmployeeRepository employeeRepo, IClientSessionHandle sessionHandle, ILoggerManager logger) =>
+            (employeeRepository, clientSessionHandle, loggerManager) = (employeeRepo, sessionHandle, logger);
 
         #endregion
 
@@ -36,6 +38,7 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -50,6 +53,7 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -64,6 +68,7 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -78,6 +83,7 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -106,12 +112,15 @@ namespace MongoCrudUi.Controllers
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.CommitTransactionAsync();
 
+                loggerManager.LogInfo($"Employee {model.Name} created successfully.");
+
                 return Ok();
             }
             catch (Exception ex)
             {
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
+                loggerManager.LogError(ex.Message);
                 return BadRequest(ex);
             }
         }
@@ -141,12 +150,15 @@ namespace MongoCrudUi.Controllers
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.CommitTransactionAsync();
 
+                loggerManager.LogInfo($"Employee {model.Name} record updated successfully.");
+
                 return Ok();
             }
             catch (Exception ex)
             {
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -164,12 +176,15 @@ namespace MongoCrudUi.Controllers
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.CommitTransactionAsync();
 
+                loggerManager.LogInfo($"Employee id {id} deleted successfully.");
+
                 return Ok();
             }
             catch (Exception ex)
             {
                 // If not working with replica sets comment the following out
                 await clientSessionHandle.AbortTransactionAsync();
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -184,6 +199,7 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }
@@ -198,6 +214,7 @@ namespace MongoCrudUi.Controllers
             }
             catch (Exception ex)
             {
+                loggerManager.LogError(ex.Message);
                 throw ex;
             }
         }

@@ -5,8 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoCrudUi.Interfaces;
+using MongoCrudUi.Logger;
 using MongoCrudUi.Repositories;
 using MongoDB.Driver;
+using NLog;
+using System;
+using System.IO;
 
 namespace MongoCrudUi
 {
@@ -14,6 +18,9 @@ namespace MongoCrudUi
     {
         public Startup(IConfiguration configuration)
         {
+            // Get nlog config file
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+            
             Configuration = configuration;
         }
 
@@ -22,6 +29,7 @@ namespace MongoCrudUi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
 
             services.AddControllersWithViews();
 
