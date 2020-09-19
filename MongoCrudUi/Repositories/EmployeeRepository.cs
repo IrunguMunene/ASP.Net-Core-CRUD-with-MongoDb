@@ -19,6 +19,61 @@ namespace MongoCrudUi.Repositories
         }
         #endregion
 
+        #region IEmployeeRepository Implementation
+        public async Task<Employee> GetEmployeeById(string id)
+        {
+            var filter = Builders<Employee>.Filter.Eq(f => f.Id, id);
+            return await Collection.Find(filter).FirstOrDefaultAsync();
+        }
+        public IEnumerable<Employee> GetEmployeeByName(string employeeName)
+        {
+            return Collection.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName.ToLower())).ToList();
+        }
+        public async Task<IEnumerable<Employee>> SearchByMultipleFields(string fieldName, string fieldValue, string employeeName)
+        {
+            var filter = CreateFieldFilter(fieldName, fieldValue);
+            var employees = await Collection.Find(filter).ToListAsync();
+            return employees.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName.ToLower())).ToList();
+        }
+        /// <summary>
+        /// The function returns a list of all the employees, sort by age ascending.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync() =>
+            await Collection.Aggregate()
+                    .SortBy(e => e.Name)
+                    .ThenBy(e => e.Department)
+                    .ThenBy(e => e.Designation)
+                    .ThenBy(e => e.Age).ToListAsync();
+
+        public async Task<PagedList<Employee>> GetEmployeesWithParametersAsync(EmployeeParameters employeeParameters)
+        {
+            FilterDefinition<Employee> filter = null;
+
+            if (!string.IsNullOrWhiteSpace(employeeParameters.FieldName) &&
+                !string.IsNullOrWhiteSpace(employeeParameters.FieldValue))
+            {
+                filter = CreateFieldFilter(employeeParameters.FieldName, employeeParameters.FieldValue);
+            }
+
+            return PagedList<Employee>.ToPagedList(FilterByEmployeeName(await FetchAsync(filter), employeeParameters));
+        }
+        public async Task<EmployeeAggregateModel> GetFilteredEmployees(string fieldName, string fieldValue)
+        {
+            var filter = CreateFieldFilter(fieldName, fieldValue);
+            var employees = await Collection.Find(filter).ToListAsync();
+            var avgAge = employees.Select(e => e.Age).Average();
+
+            return new EmployeeAggregateModel
+            {
+                Employees = employees,
+                AverageAge = avgAge
+            };
+        }
+
+        #endregion
+
+        #region Private Methods
         /// <summary>
         /// The function creates different indexes on the employee collection.
         /// </summary>
@@ -26,7 +81,7 @@ namespace MongoCrudUi.Repositories
         private void CreateIndex()
         {
             var indexOptions = new CreateIndexOptions();
-            
+
             var genderIndexKeys = Builders<Employee>.IndexKeys.Ascending(e => e.Gender);
             var genderIndexModel = new CreateIndexModel<Employee>(genderIndexKeys, indexOptions);
 
@@ -53,52 +108,9 @@ namespace MongoCrudUi.Repositories
             Collection.Indexes.CreateOne(cityIndexModel);
             Collection.Indexes.CreateOne(countryIndexModel);
         }
-
-        public async Task<Employee> GetEmployeeById(string id)
-        {
-            var filter = Builders<Employee>.Filter.Eq(f => f.Id, id);
-            return await Collection.Find(filter).FirstOrDefaultAsync();
-        }
-
-        public IEnumerable<Employee> GetEmployeeByName(string employeeName)
-        {
-            return Collection.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName.ToLower())).ToList();
-        }
-
-        public async Task<IEnumerable<Employee>> SearchByMultipleFields(string fieldName, string fieldValue, string employeeName)
-        {
-            var filter = CreateFieldFilter(fieldName, fieldValue);
-            var employees = await Collection.Find(filter).ToListAsync();
-            return employees.AsQueryable().Where(e => e.Name.ToLower().StartsWith(employeeName.ToLower())).ToList();
-        }
-
-        /// <summary>
-        /// The function returns a list of all the employees, sort by age ascending.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync() =>
-            await Collection.Aggregate()
-                    .SortBy(e => e.Name)
-                    .ThenBy(e => e.Department)
-                    .ThenBy(e => e.Designation)
-                    .ThenBy(e => e.Age).ToListAsync();
-
-        public async Task<PagedList<Employee>> GetEmployeesWithParametersAsync(EmployeeParameters employeeParameters)
-        {
-            FilterDefinition<Employee> filter = null;
-
-            if (!string.IsNullOrWhiteSpace(employeeParameters.FieldName) && 
-                !string.IsNullOrWhiteSpace(employeeParameters.FieldValue))
-            {
-                filter = CreateFieldFilter(employeeParameters.FieldName, employeeParameters.FieldValue);
-            }
-
-            return PagedList<Employee>.ToPagedList(FilterByEmployeeName(await FetchAllAsync(filter), employeeParameters));
-        }
-
         private IEnumerable<Employee> FilterByEmployeeName(IEnumerable<Employee> employees, EmployeeParameters parameters)
         {
-            return string.IsNullOrWhiteSpace(parameters.EmployeeName) ? 
+            return string.IsNullOrWhiteSpace(parameters.EmployeeName) ?
                         employees.OrderBy(e => e.Name)
                             .ThenBy(e => e.Department)
                             .ThenBy(e => e.Designation)
@@ -111,20 +123,6 @@ namespace MongoCrudUi.Repositories
                             .ThenBy(e => e.Age)
                             .ToList();
         }
-
-        public async Task<EmployeeAggregateModel> GetFilteredEmployees(string fieldName, string fieldValue)
-        {
-            var filter = CreateFieldFilter(fieldName, fieldValue);
-            var employees = await Collection.Find(filter).ToListAsync();
-            var avgAge = employees.Select(e => e.Age).Average();
-
-            return new EmployeeAggregateModel
-            {
-                Employees = employees,
-                AverageAge = avgAge
-            };
-        }
-
         private FilterDefinition<Employee> CreateFieldFilter(string fieldName, string fieldValue)
         {
             FilterDefinition<Employee> filter = null;
@@ -150,5 +148,6 @@ namespace MongoCrudUi.Repositories
 
             return filter;
         }
+        #endregion
     }
 }

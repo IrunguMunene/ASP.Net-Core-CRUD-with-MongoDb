@@ -74,7 +74,7 @@ namespace MongoCrudUi.Repositories.Base
             return await Collection.Distinct<string>(fieldName, "{}").ToListAsync();
         }
 
-        protected virtual async Task<IEnumerable<T>> FetchAllAsync(FilterDefinition<T> filter)
+        protected virtual async Task<IEnumerable<T>> FetchAsync(FilterDefinition<T> filter)
         {
             return filter == null ? 
                         await Collection.Aggregate().ToListAsync() :
