@@ -21,7 +21,6 @@ namespace MongoCrudUi.Repositories
 
         /// <summary>
         /// The function creates different indexes on the employee collection.
-        /// Index creation as per Test request.
         /// </summary>
         /// <returns></returns>
         private void CreateIndex()
