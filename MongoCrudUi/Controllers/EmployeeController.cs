@@ -3,6 +3,7 @@ using MongoCrudUi.Entities;
 using MongoCrudUi.Interfaces;
 using MongoCrudUi.Models;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -76,6 +77,33 @@ namespace MongoCrudUi.Controllers
             {
                 var employees = employeeRepository.SearchByMultipleFields(fieldName, fieldValue, employeeName);
                 return employees;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [Route("GetEmployeesWithParameters"), HttpGet]
+        public async Task<IActionResult> GetEmployeesWithParameters([FromQuery]EmployeeParameters employeeParameters)
+        {
+            try
+            {
+                var employees = await employeeRepository.GetEmployeesWithParametersAsync(employeeParameters);
+
+                var metadata = new
+                {
+                    employees.TotalCount,
+                    employees.PageSize,
+                    employees.CurrentPage,
+                    employees.TotalPages,
+                    employees.HasNext,
+                    employees.HasPrevious
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+                return Ok(employees);
             }
             catch (Exception ex)
             {

@@ -75,7 +75,6 @@ namespace MongoCrudUi.Repositories
 
         /// <summary>
         /// The function returns a list of all the employees, sort by age ascending.
-        /// A show case of using simple aggregation as per test requirement
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Employee>> GetEmployeesAsync() =>
@@ -84,6 +83,35 @@ namespace MongoCrudUi.Repositories
                     .ThenBy(e => e.Department)
                     .ThenBy(e => e.Designation)
                     .ThenBy(e => e.Age).ToListAsync();
+
+        public async Task<PagedList<Employee>> GetEmployeesWithParametersAsync(EmployeeParameters employeeParameters)
+        {
+            FilterDefinition<Employee> filter = null;
+
+            if (!string.IsNullOrWhiteSpace(employeeParameters.FieldName) && 
+                !string.IsNullOrWhiteSpace(employeeParameters.FieldValue))
+            {
+                filter = CreateFieldFilter(employeeParameters.FieldName, employeeParameters.FieldValue);
+            }
+
+            return PagedList<Employee>.ToPagedList(FilterByEmployeeName(await FetchAllAsync(filter), employeeParameters));
+        }
+
+        private IEnumerable<Employee> FilterByEmployeeName(IEnumerable<Employee> employees, EmployeeParameters parameters)
+        {
+            return string.IsNullOrWhiteSpace(parameters.EmployeeName) ? 
+                        employees.OrderBy(e => e.Name)
+                            .ThenBy(e => e.Department)
+                            .ThenBy(e => e.Designation)
+                            .ThenBy(e => e.Age).ToList() :
+                        employees.AsQueryable().Where(e => e.Name.ToLower()
+                            .StartsWith(parameters.EmployeeName.ToLower()))
+                            .OrderBy(e => e.Name)
+                            .ThenBy(e => e.Department)
+                            .ThenBy(e => e.Designation)
+                            .ThenBy(e => e.Age)
+                            .ToList();
+        }
 
         public async Task<EmployeeAggregateModel> GetFilteredEmployees(string fieldName, string fieldValue)
         {
