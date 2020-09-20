@@ -11,8 +11,14 @@ namespace MongoCrudUi.Repositories
 {
     public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
+        #region Private Properties
+
+        private const string COLLECTION_NAME = "employees";
+
+        #endregion
+
         #region Constructor
-        public EmployeeRepository(IMongoClient client, IClientSessionHandle sessionHandle) : base(client, sessionHandle, "employees")
+        public EmployeeRepository(IMongoClient client, IClientSessionHandle sessionHandle) : base(client, sessionHandle, COLLECTION_NAME)
         {
             // NOTE: Index creation in mongoDb is Idempotent
             CreateIndex();

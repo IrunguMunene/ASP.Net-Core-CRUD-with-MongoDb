@@ -30,6 +30,7 @@ namespace MongoCrudUi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureIISIntegration();
             services.AddSingleton<ILoggerManager, LoggerManager>();
 
             services.AddControllersWithViews();
@@ -48,10 +49,10 @@ namespace MongoCrudUi
                 // change this value to reflect the right connection string.
 
                 //Uncomment the following out if not using a replica set
-                //return new MongoClient("mongodb://localhost:27017")
+                //return new MongoClient(Configuration.GetConnectionString("MongoDb"))
 
                 // Comment the following out if not using a replica set
-                return new MongoClient("mongodb://localhost:27017/?replicaSet=rs0"); 
+                return new MongoClient(Configuration.GetConnectionString("MongoDbWithReplicaSets")); 
             });
 
             // IoC declaration for starting a session of mongodb transaction,
